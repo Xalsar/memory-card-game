@@ -7,6 +7,15 @@
     left: 50%;
     top: 15%;
     transform: translate(-50%, -50%);
+}
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.4rem;
+}
+
+.cardsContainer {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
