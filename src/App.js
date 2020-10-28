@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 
 function App() {
+	const [message, setMessage] = useState("Loading...")
+	
+	useEffect(() => {
+		fetch('http://localhost:8080/test/1')
+		.then(res => {
+			if(res.status === 200){
+				return res.json()
+			} else {
+				Promise.reject()
+			}
+		})
+		.then(test => {
+			setMessage(test.message);
+		})
+		.catch(() => {
+			setMessage("Something is wrong...")
+		})
+	}, [])
+	
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+		<div className={"App"}>
+			<h1>React is Working</h1>
+			<p>{message}</p>
+		</div>
   );
 }
 
