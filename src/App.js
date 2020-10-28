@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
+import Desk from './containers/Desk/Desk'
 
 function App() {
 
   return (
 		<div className={"App"}>
-			<h1>React is Working</h1>
+			<Desk/>
 		</div>
   );
 }
