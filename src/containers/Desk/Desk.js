@@ -14,6 +14,12 @@ const Desk = (props) => {
     return (
         <div className={classes.desk}>
             <div className={classes.header}>
+                <div>
+                    U
+                </div>
+                <h3 className={classes.infoPanel}>
+                    Come on, you can do it, I belive in you :)
+                </h3>
                 <Timer />
             </div>
             <div className={classes.cardsContainer}>
