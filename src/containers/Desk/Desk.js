@@ -1,62 +1,40 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Card from '../../components/Card/Card'
+import { connect } from 'react-redux'
 import classes from './Desk.module.css'
 
-const Desk = () => {
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    }
-
-    const deck = [
-        {
-            value: 1,
-            color: '--light-orange'
-        },
-        {
-            value: 1,
-            color: '--light-orange'
-        },
-        {
-            value: 2,
-            color: '--light-pink'
-        },
-        {
-            value: 2,
-            color: '--light-pink'
-        },
-        {
-            value: 3,
-            color: '--light-blue'
-        },
-        {
-            value: 3,
-            color: '--light-blue'
-        },
-        {
-            value: 4,
-            color: '--light-green'
-        },
-        {
-            value: 4,
-            color: '--light-green'
-        }
-    ]
-
-    shuffleArray(deck)
+const Desk = (props) => {
+    const shuffle = props.shuffle
+    
+    useEffect(() => {
+        shuffle()
+    }, [shuffle])
 
     return (
-        <container className={classes.desk}>
-            {deck.map((card, id) => (
+        <div className={classes.desk}>
+            {props.deck.map((card) => (
                 <Card
-                    key={id}
+                    key={card.id}
                     color={card.color}
+                    click={() => props.pick(card.id)}
+                    active={card.found}
                 />
             ))}
-        </container>
+        </div>
     )
 }
 
-export default Desk
+const mapStateToProps = state => {
+    return {
+        deck: state.deck.deck
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        shuffle: () => dispatch({ type: 'SHUFFLE' }),
+        pick: (payload) => dispatch({ type: 'PICK', payload })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Desk)
