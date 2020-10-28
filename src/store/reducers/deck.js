@@ -3,6 +3,7 @@ import _ from 'lodash'
 const initialState = {
     firstChoice: {},
     secondChoice: {},
+    error: false,
     deck: [
         {
             id: 0,
@@ -57,7 +58,8 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'SHUFFLE':
+
+        case 'SET_GAME':
             function shuffleArray(array) {
                 for (let i = array.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
@@ -81,6 +83,7 @@ const reducer = (state = initialState, action) => {
 
             return {
                 ...state,
+                error: false,
                 deck
             }
 
@@ -102,6 +105,7 @@ const reducer = (state = initialState, action) => {
 
             let firstChoice = { ...state.firstChoice }
             let secondChoice = { ...state.secondChoice }
+            let error = false
 
             if (_.isEmpty(firstChoice)) {
                 firstChoice = card
@@ -124,6 +128,8 @@ const reducer = (state = initialState, action) => {
 
                         return c
                     })
+                }else {
+                    error = true
                 }
 
                 firstChoice = {}
@@ -134,9 +140,10 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 deck: updatedDeck,
                 firstChoice,
-                secondChoice
+                secondChoice,
+                error
             }
-
+        
         default:
             return state
     }

@@ -5,11 +5,19 @@ import { connect } from 'react-redux'
 import classes from './Desk.module.css'
 
 const Desk = (props) => {
-    const shuffle = props.shuffle
+    const setGame = props.setGame
 
     useEffect(() => {
-        shuffle()
-    }, [shuffle])
+        setGame()
+    }, [setGame])
+
+    if(props.error) {
+        setTimeout(() => {
+            setGame()
+        }, 1500)
+    }
+
+    const message = !props.error ? "Come on, you can do it, I belive in you :)" : "Error commited, try again ;)"
 
     return (
         <div className={classes.desk}>
@@ -18,7 +26,7 @@ const Desk = (props) => {
                     U
                 </div>
                 <h3 className={classes.infoPanel}>
-                    Come on, you can do it, I belive in you :)
+                    {message}
                 </h3>
                 <Timer />
             </div>
@@ -38,13 +46,14 @@ const Desk = (props) => {
 
 const mapStateToProps = state => {
     return {
-        deck: state.deck.deck
+        deck: state.deck.deck,
+        error: state.deck.error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        shuffle: () => dispatch({ type: 'SHUFFLE' }),
+        setGame: () => dispatch({ type: 'SET_GAME' }),
         pick: (payload) => dispatch({ type: 'PICK', payload })
     }
 }
