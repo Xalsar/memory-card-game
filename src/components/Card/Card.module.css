@@ -1,0 +1,14 @@
+.card {
+    width: 22rem;
+    height: 22rem;
+    box-shadow: 0 2rem 2rem rgba(0,0,0,0.1);
+    margin: 2.9rem 0;
+    border-radius: 1.2rem;
+    background-color: var(--light-orange);
+    transition: all .1s ease-in-out;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.1) translateY(-2rem);
+}
