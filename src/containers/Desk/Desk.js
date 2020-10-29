@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useHistory } from "react-router-dom"
 import Card from '../../components/Card/Card'
 import Timer from '../../components/Timer/Timer'
 import Container from '../../components/Container/Container'
@@ -8,23 +9,27 @@ import { connect } from 'react-redux'
 import classes from './Desk.module.css'
 
 const Desk = (props) => {
-    const setGame = props.setGame
-    const hide = props.hide
+    const history = useHistory()
 
     useEffect(() => {
-        setGame()
+        props.setGame()
+        props.setTimer()
 
         setTimeout(() => {
-            hide()
+            props.hide()
         }, 3000)
-    }, [setGame, hide])
+    }, [])
 
     if (props.error) {
-        setGame()
+        props.setGame()
 
         setTimeout(() => {
-            hide()
+            props.hide()
         }, 3000)
+    }
+
+    if (props.endTime) {
+        history.push('/resume')
     }
 
     const message = !props.error ? "Come on, you can do it, I belive in you :)" : "Error commited, try again ;)"
@@ -32,7 +37,7 @@ const Desk = (props) => {
     return (
         <Container>
             <div className={classes.header}>
-                <UserAvatar/>
+                <UserAvatar />
                 <div className={classes.infoPanel}>
                     <Title>{message}</Title>
                 </div>
@@ -65,12 +70,14 @@ const mapStateToProps = state => {
         firstChoice: state.deck.firstChoice,
         secondChoice: state.deck.secondChoice,
         show: state.deck.show,
+        endTime: state.deck.endTime
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         setGame: () => dispatch({ type: 'SET_GAME' }),
+        setTimer: () => dispatch({ type: 'SET_TIMER' }),
         pick: (payload) => dispatch({ type: 'PICK', payload }),
         hide: () => dispatch({ type: 'HIDE' })
     }

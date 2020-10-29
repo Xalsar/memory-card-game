@@ -1,5 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { useHistory } from "react-router-dom"
+import dateformat from 'dateformat'
 import PodiumList from '../../components/PodiumList/PodiumList'
 import Container from '../../components/Container/Container'
 import Title from '../../components/Title/Title'
@@ -7,8 +9,10 @@ import Button from '../../components/Button/Button'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import classes from './Resume.module.css'
 
-const Resume = () => {
+const Resume = (props) => {
     const history = useHistory()
+
+    const interval = new Date(props.endTime - props.startTime)
 
     return <Container>
         <div className={classes.header}>
@@ -18,7 +22,7 @@ const Resume = () => {
             </Title>
         </div>
         <h3 className={classes.time}>
-            00:20
+            {dateformat(interval, 'MM:ss')}
         </h3>
         <PodiumList
             items={[
@@ -58,4 +62,11 @@ const Resume = () => {
     </Container>
 }
 
-export default Resume
+const mapStateToProps = state => {
+    return {
+        startTime: state.deck.startTime,
+        endTime: state.deck.endTime
+    }
+}
+
+export default connect(mapStateToProps)(Resume)
