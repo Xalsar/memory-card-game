@@ -5,6 +5,8 @@ const initialState = {
     secondChoice: {},
     error: false,
     show: true,
+    startTime: 0,
+    endTime: 0,
     deck: [
         {
             id: 0,
@@ -81,6 +83,13 @@ const reducer = (state = initialState, action) => {
                 firstChoice: {},
                 secondChoice: {}
             }
+        
+        case 'SET_TIMER':
+            return {
+                ...state,
+                startTime: new Date().getTime(),
+                endTime: 0
+            }
 
         case 'PICK':
             let updatedDeck = [
@@ -101,6 +110,7 @@ const reducer = (state = initialState, action) => {
             let firstChoice = { ...state.firstChoice }
             let secondChoice = { ...state.secondChoice }
             let error = false
+            let endTime = 0
 
             if (_.isEmpty(firstChoice)) {
                 firstChoice = card
@@ -124,6 +134,11 @@ const reducer = (state = initialState, action) => {
                         return c
                     })
 
+                    const doesGameContinue = updatedDeck.some((card) => !card.found)
+                    if (!doesGameContinue) {
+                        endTime = new Date().getTime()
+                    }
+
                     firstChoice = {}
                     secondChoice = {}
                 } else {
@@ -131,12 +146,14 @@ const reducer = (state = initialState, action) => {
                 }
             }
 
+            
             return {
                 ...state,
                 deck: updatedDeck,
                 firstChoice,
                 secondChoice,
-                error
+                error,
+                endTime
             }
 
         case 'HIDE':
