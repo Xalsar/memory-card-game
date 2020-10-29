@@ -3,6 +3,7 @@ import Card from '../../components/Card/Card'
 import Timer from '../../components/Timer/Timer'
 import Container from '../../components/Container/Container'
 import Title from '../../components/Title/Title'
+import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import { connect } from 'react-redux'
 import classes from './Desk.module.css'
 
@@ -31,9 +32,7 @@ const Desk = (props) => {
     return (
         <Container>
             <div className={classes.header}>
-                <div>
-                    U
-                </div>
+                <UserAvatar/>
                 <div className={classes.infoPanel}>
                     <Title>{message}</Title>
                 </div>

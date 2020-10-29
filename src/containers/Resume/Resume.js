@@ -4,15 +4,19 @@ import PodiumList from '../../components/PodiumList/PodiumList'
 import Container from '../../components/Container/Container'
 import Title from '../../components/Title/Title'
 import Button from '../../components/Button/Button'
+import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import classes from './Resume.module.css'
 
 const Resume = () => {
     const history = useHistory()
 
     return <Container>
-        <Title>
-            Congratulations you have finished the game with a supertime of:
-        </Title>
+        <div className={classes.header}>
+            <UserAvatar/>
+            <Title>
+                Congratulations, you completed the game!
+            </Title>
+        </div>
         <h3 className={classes.time}>
             00:20
         </h3>
