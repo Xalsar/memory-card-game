@@ -4,6 +4,7 @@ const initialState = {
     firstChoice: {},
     secondChoice: {},
     error: false,
+    show: true,
     deck: [
         {
             id: 0,
@@ -67,16 +68,7 @@ const reducer = (state = initialState, action) => {
                 }
             }
 
-            const deck = [
-                { ...state.deck[0] },
-                { ...state.deck[1] },
-                { ...state.deck[2] },
-                { ...state.deck[3] },
-                { ...state.deck[4] },
-                { ...state.deck[5] },
-                { ...state.deck[6] },
-                { ...state.deck[7] },
-            ]
+            const deck = initialState.deck
 
 
             shuffleArray(deck)
@@ -84,7 +76,10 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: false,
-                deck
+                show: true,
+                deck,
+                firstChoice: {},
+                secondChoice: {}
             }
 
         case 'PICK':
@@ -128,12 +123,12 @@ const reducer = (state = initialState, action) => {
 
                         return c
                     })
-                }else {
+
+                    firstChoice = {}
+                    secondChoice = {}
+                } else {
                     error = true
                 }
-
-                firstChoice = {}
-                secondChoice = {}
             }
 
             return {
@@ -143,7 +138,13 @@ const reducer = (state = initialState, action) => {
                 secondChoice,
                 error
             }
-        
+
+        case 'HIDE':
+            return {
+                ...state,
+                show: false
+            }
+
         default:
             return state
     }

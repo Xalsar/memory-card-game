@@ -6,15 +6,22 @@ import classes from './Desk.module.css'
 
 const Desk = (props) => {
     const setGame = props.setGame
+    const hide = props.hide
 
     useEffect(() => {
         setGame()
-    }, [setGame])
 
-    if(props.error) {
         setTimeout(() => {
-            setGame()
-        }, 1500)
+            hide()
+        }, 3000)
+    }, [setGame, hide])
+
+    if (props.error) {
+        setGame()
+
+        setTimeout(() => {
+            hide()
+        }, 3000)
     }
 
     const message = !props.error ? "Come on, you can do it, I belive in you :)" : "Error commited, try again ;)"
@@ -34,6 +41,12 @@ const Desk = (props) => {
                 {props.deck.map((card) => (
                     <Card
                         key={card.id}
+                        hidden={
+                            props.firstChoice.id !== card.id &&
+                            props.secondChoice.id !== card.id &&
+                            !props.show &&
+                            !card.found
+                        }
                         color={card.color}
                         click={() => props.pick(card.id)}
                         active={card.found}
@@ -47,14 +60,18 @@ const Desk = (props) => {
 const mapStateToProps = state => {
     return {
         deck: state.deck.deck,
-        error: state.deck.error
+        error: state.deck.error,
+        firstChoice: state.deck.firstChoice,
+        secondChoice: state.deck.secondChoice,
+        show: state.deck.show,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         setGame: () => dispatch({ type: 'SET_GAME' }),
-        pick: (payload) => dispatch({ type: 'PICK', payload })
+        pick: (payload) => dispatch({ type: 'PICK', payload }),
+        hide: () => dispatch({ type: 'HIDE' })
     }
 }
 
