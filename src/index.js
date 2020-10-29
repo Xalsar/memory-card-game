@@ -9,9 +9,11 @@ import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
 
 import deck from './store/reducers/deck'
+import user from './store/reducers/user'
 
 const store = createStore(combineReducers({
-  deck
+  deck,
+  user
 }))
 
 ReactDOM.render(
