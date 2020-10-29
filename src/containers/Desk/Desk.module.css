@@ -23,7 +23,7 @@
 }
 
 .infoPanel {
-    font-family: 'Varela Round';
+    font-family: var(--main-font);
     font-size: 2.5rem; 
     color: #3c3c3c;
     max-width: 70rem;

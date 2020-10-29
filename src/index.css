@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap');
 
 :root {
-    --title-font: 'Open Sans';
+    --main-font: 'M PLUS Rounded 1c', sans-serif;
     --text-font: 'Lato';
 
     --light-blue: #12CBC4;
@@ -11,8 +10,8 @@
     --dull-red: #eb4d4b;
     --light-pink: #ED4C67;
     --dull-pink: #be2edd;
-    --light-orange: #FFC312;
-    --dull-orange:#EE5A24;
+    --light-yellow: #FFC312;
+    --dull-yellow:#F79F1F;
     --light-green: #C4E538;
     --dull-green: #6ab04c;
 }
