@@ -2,6 +2,7 @@ import React from 'react'
 import PodiumList from '../../components/PodiumList/PodiumList'
 import Container from '../../components/Container/Container'
 import Title from '../../components/Title/Title'
+import Button from '../../components/Button/Button'
 import classes from './Resume.module.css'
 
 const Resume = () => {
@@ -40,6 +41,9 @@ const Resume = () => {
                 }
             ]}
         />
+        <Button>
+            PLAY AGAIN
+        </Button>
     </Container>
 }
 
