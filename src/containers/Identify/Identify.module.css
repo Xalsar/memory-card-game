@@ -1,0 +1,10 @@
+.avatar {
+    border-radius: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
+.title * {
+    font-size: 3.5rem;
+    margin: 2rem 0 2.1rem 0;
+}
