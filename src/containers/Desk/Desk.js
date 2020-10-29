@@ -12,13 +12,19 @@ const Desk = (props) => {
     const history = useHistory()
 
     useEffect(() => {
-        props.setGame()
-        props.setTimer()
+        if (props.continueGame) {
+            props.setGame()
+            props.setTimer()
 
-        setTimeout(() => {
-            props.hide()
-        }, 3000)
+            setTimeout(() => {
+                props.hide()
+            }, 3000)
+        }
     }, [])
+
+    if (!props.continueGame) {
+        history.push('/resume')
+    }
 
     if (props.error) {
         props.setGame()
@@ -26,10 +32,6 @@ const Desk = (props) => {
         setTimeout(() => {
             props.hide()
         }, 3000)
-    }
-
-    if (props.endTime) {
-        history.push('/resume')
     }
 
     const message = !props.error ? "Come on, you can do it, I belive in you :)" : "Error commited, try again ;)"
@@ -70,7 +72,7 @@ const mapStateToProps = state => {
         firstChoice: state.deck.firstChoice,
         secondChoice: state.deck.secondChoice,
         show: state.deck.show,
-        endTime: state.deck.endTime
+        continueGame: state.deck.continueGame
     }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from "react-router-dom"
 import dateformat from 'dateformat'
@@ -10,13 +10,18 @@ import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import classes from './Resume.module.css'
 
 const Resume = (props) => {
+
+    useEffect(() => {
+        props.restartGame()
+    }, [])
+
     const history = useHistory()
 
     const interval = new Date(props.endTime - props.startTime)
 
     return <Container>
         <div className={classes.header}>
-            <UserAvatar/>
+            <UserAvatar />
             <Title>
                 Congratulations, you completed the game!
             </Title>
@@ -53,9 +58,9 @@ const Resume = (props) => {
             ]}
         />
         <Button
-        click={() => {
-            history.push('/game')
-        }}
+            click={() => {
+                history.push('/game')
+            }}
         >
             PLAY AGAIN
         </Button>
@@ -69,4 +74,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Resume)
+const mapDispatchToProps = dispatch => {
+    return {
+        restartGame: () => dispatch({ type: 'RESTART' })
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Resume)
