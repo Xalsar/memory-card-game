@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import Card from '../../components/Card/Card'
 import Timer from '../../components/Timer/Timer'
+import Container from '../../components/Container/Container'
 import { connect } from 'react-redux'
 import classes from './Desk.module.css'
 
@@ -27,7 +28,7 @@ const Desk = (props) => {
     const message = !props.error ? "Come on, you can do it, I belive in you :)" : "Error commited, try again ;)"
 
     return (
-        <div className={classes.desk}>
+        <Container>
             <div className={classes.header}>
                 <div>
                     U
@@ -53,7 +54,7 @@ const Desk = (props) => {
                     />
                 ))}
             </div>
-        </div>
+        </Container>
     )
 }
 

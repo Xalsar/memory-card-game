@@ -1,9 +1,10 @@
 import React from 'react'
 import PodiumList from '../../components/PodiumList/PodiumList'
+import Container from '../../components/Container/Container'
 import classes from './Resume.module.css'
 
 const Resume = () => {
-    return <div className={classes.container}>
+    return <Container>
         <h2 className={classes.title}>
             Congratulations you have finished the game with a supertime of:
         </h2>
@@ -38,7 +39,7 @@ const Resume = () => {
                 }
             ]}
         />
-    </div>
+    </Container>
 }
 
 export default Resume
