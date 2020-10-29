@@ -1,0 +1,10 @@
+.container {
+    height: 12rem;
+    width: 100%;
+    max-width: 100rem;
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    transform: translate(-50%, -50%);
+}
