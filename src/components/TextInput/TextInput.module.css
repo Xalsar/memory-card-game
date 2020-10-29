@@ -1,0 +1,9 @@
+.input {
+    display: block;
+    margin: 0 auto;
+    font-size: 2rem;
+    padding: 2rem;
+    border: .1rem solid grey;
+    border-radius: 1rem;
+    font-family: var(--main-font);
+}
