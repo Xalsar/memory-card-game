@@ -8,3 +8,11 @@
     font-size: 3.5rem;
     margin: 2rem 0 2.1rem 0;
 }
+
+.error {
+    color: var(--dull-red);
+    display: block;
+    margin: 1rem auto;
+    font-style: italic;
+    font-size: 1.5rem;
+}
