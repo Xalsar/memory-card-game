@@ -1,0 +1,16 @@
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.avatar img {
+    border-radius: 7rem;
+    width: 8rem;
+}
+
+.avatar h3 {
+    font-family: var(--main-font);
+    font-size: 2rem;
+    padding: 2rem;
+}
