@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Card from '../../components/Card/Card'
 import Timer from '../../components/Timer/Timer'
 import Container from '../../components/Container/Container'
+import Title from '../../components/Title/Title'
 import { connect } from 'react-redux'
 import classes from './Desk.module.css'
 
@@ -33,9 +34,9 @@ const Desk = (props) => {
                 <div>
                     U
                 </div>
-                <h3 className={classes.infoPanel}>
-                    {message}
-                </h3>
+                <div className={classes.infoPanel}>
+                    <Title>{message}</Title>
+                </div>
                 <Timer />
             </div>
             <div className={classes.cardsContainer}>

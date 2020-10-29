@@ -1,13 +1,14 @@
 import React from 'react'
 import PodiumList from '../../components/PodiumList/PodiumList'
 import Container from '../../components/Container/Container'
+import Title from '../../components/Title/Title'
 import classes from './Resume.module.css'
 
 const Resume = () => {
     return <Container>
-        <h2 className={classes.title}>
+        <Title>
             Congratulations you have finished the game with a supertime of:
-        </h2>
+        </Title>
         <h3 className={classes.time}>
             00:20
         </h3>
