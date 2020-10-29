@@ -9,13 +9,13 @@ const initialState = {
         {
             id: 0,
             value: 1,
-            color: '--light-orange',
+            color: '--light-yellow',
             found: false
         },
         {
             id: 1,
             value: 1,
-            color: '--light-orange',
+            color: '--light-yellow',
             found: false
         },
         {
