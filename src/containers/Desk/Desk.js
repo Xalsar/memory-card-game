@@ -12,7 +12,9 @@ const Desk = (props) => {
     const history = useHistory()
 
     useEffect(() => {
-        if (props.continueGame) {
+        if (!props.userName) {
+            history.push('/')
+        } else if (props.continueGame) {
             props.setGameAndTimer()
 
             setTimeout(() => {
@@ -73,7 +75,8 @@ const mapStateToProps = state => {
         firstChoice: state.deck.firstChoice,
         secondChoice: state.deck.secondChoice,
         show: state.deck.show,
-        continueGame: state.deck.continueGame
+        continueGame: state.deck.continueGame,
+        userName: state.user.name
     }
 }
 

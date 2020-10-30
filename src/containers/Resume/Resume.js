@@ -13,6 +13,13 @@ import classes from './Resume.module.css'
 const Resume = (props) => {
     const interval = new Date(props.endTime - props.startTime)
     const [scores, setScores] = useState([])
+    const history = useHistory()
+
+    useEffect(() => {
+        if (!props.userName) {
+            history.push('/')
+        }
+    }, [])
 
     useEffect(() => {
         if (scores.length === 0) {
@@ -24,8 +31,6 @@ const Resume = (props) => {
             props.restartGame()
         }
     })
-
-    const history = useHistory()
 
     return <Container>
         <div className={classes.header}>
