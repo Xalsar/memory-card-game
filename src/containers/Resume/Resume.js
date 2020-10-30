@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from "react-router-dom"
 import dateformat from 'dateformat'
+import axios from '../../axios'
 import PodiumList from '../../components/PodiumList/PodiumList'
 import Container from '../../components/Container/Container'
 import Title from '../../components/Title/Title'
@@ -10,14 +11,23 @@ import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import classes from './Resume.module.css'
 
 const Resume = (props) => {
+    const interval = new Date(props.endTime - props.startTime)
+    const [scores, setScores] = useState([])
 
     useEffect(() => {
-        props.restartGame()
-    }, [])
+        if (scores.length === 0) {
+            console.log(props.userName)
+
+            axios.post('/score/register-and-list', {
+                score: interval,
+                player: props.userName
+            }).then(data => setScores(data.data))
+        } else {
+            props.restartGame()
+        }
+    })
 
     const history = useHistory()
-
-    const interval = new Date(props.endTime - props.startTime)
 
     return <Container>
         <div className={classes.header}>
@@ -30,32 +40,7 @@ const Resume = (props) => {
             {dateformat(interval, 'MM:ss')}
         </h3>
         <PodiumList
-            items={[
-                {
-                    name: "Morris Kline",
-                    time: "00:15"
-                },
-                {
-                    name: "Bruce wayne",
-                    time: "00:15"
-                },
-                {
-                    name: "HP Lovecraft",
-                    time: "00:15"
-                },
-                {
-                    name: "Ray Bradburry",
-                    time: "00:15"
-                },
-                {
-                    name: "Phillip K Dick",
-                    time: "00:15"
-                },
-                {
-                    name: "Robert E. Howard",
-                    time: "00:15"
-                }
-            ]}
+            items={scores}
         />
         <Button
             click={() => {
@@ -70,7 +55,9 @@ const Resume = (props) => {
 const mapStateToProps = state => {
     return {
         startTime: state.deck.startTime,
-        endTime: state.deck.endTime
+        endTime: state.deck.endTime,
+        continueGame: state.deck.continueGame,
+        userName: state.user.name,
     }
 }
 
