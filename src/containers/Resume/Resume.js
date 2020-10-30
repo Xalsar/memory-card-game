@@ -16,8 +16,6 @@ const Resume = (props) => {
 
     useEffect(() => {
         if (scores.length === 0) {
-            console.log(props.userName)
-
             axios.post('/score/register-and-list', {
                 score: interval,
                 player: props.userName
