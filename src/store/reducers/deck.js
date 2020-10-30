@@ -60,118 +60,131 @@ const initialState = {
     ]
 }
 
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+const setGame = (state) => {
+    const deck = state.deck
+
+    shuffleArray(deck)
+
+    return {
+        ...state,
+        error: false,
+        show: true,
+        deck,
+        firstChoice: {},
+        secondChoice: {}
+    }
+}
+
+const setTime = (state) => {
+    return {
+        ...state,
+        startTime: new Date().getTime(),
+        endTime: 0
+    }
+}
+
+const pick = (state, id) => {
+    let updatedDeck = [
+        { ...state.deck[0] },
+        { ...state.deck[1] },
+        { ...state.deck[2] },
+        { ...state.deck[3] },
+        { ...state.deck[4] },
+        { ...state.deck[5] },
+        { ...state.deck[6] },
+        { ...state.deck[7] },
+    ]
+
+    const card = updatedDeck.find((c) => c.id === id)
+    const value = card.value
+
+    let firstChoice = { ...state.firstChoice }
+    let secondChoice = { ...state.secondChoice }
+    let error = false
+    let endTime = 0
+    let continueGame = state.continueGame
+
+    if (_.isEmpty(firstChoice)) {
+        firstChoice = card
+    } else if (firstChoice.id !== card.id) {
+        secondChoice = card
+    }
+
+    if (
+        !_.isEmpty(firstChoice) &&
+        !_.isEmpty(secondChoice)
+    ) {
+        if (firstChoice.value === secondChoice.value) {
+            updatedDeck = updatedDeck.map((c) => {
+                if (c.value === value) {
+                    return {
+                        ...c,
+                        found: true
+                    }
+                }
+
+                return c
+            })
+
+            const doesGameContinue = updatedDeck.some((card) => !card.found)
+            if (!doesGameContinue) {
+                endTime = new Date().getTime()
+                continueGame = false
+            }
+
+            firstChoice = {}
+            secondChoice = {}
+        } else {
+            error = true
+        }
+    }
+
+
+
+    return {
+        ...state,
+        deck: updatedDeck,
+        firstChoice,
+        secondChoice,
+        error,
+        endTime,
+        continueGame
+    }
+}
+
+const hide = (state) => {
+    return {
+        ...state,
+        show: false
+    }
+}
+
+const restart = (state) => {
+    return {
+        ...state,
+        continueGame: true
+    }
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case 'SET_GAME':
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]];
-                }
-            }
+        case 'SET_GAME': return setGame(state)
 
-            const deck = initialState.deck
+        case 'SET_TIMER': return setTime(state)
 
+        case 'PICK': return pick(state, action.payload)
 
-            shuffleArray(deck)
+        case 'HIDE': return hide(state)
 
-            return {
-                ...state,
-                error: false,
-                show: true,
-                deck,
-                firstChoice: {},
-                secondChoice: {}
-            }
-
-        case 'SET_TIMER':
-            return {
-                ...state,
-                startTime: new Date().getTime(),
-                endTime: 0
-            }
-
-        case 'PICK':
-            let updatedDeck = [
-                { ...state.deck[0] },
-                { ...state.deck[1] },
-                { ...state.deck[2] },
-                { ...state.deck[3] },
-                { ...state.deck[4] },
-                { ...state.deck[5] },
-                { ...state.deck[6] },
-                { ...state.deck[7] },
-            ]
-
-            const id = action.payload
-            const card = updatedDeck.find((c) => c.id === id)
-            const value = card.value
-
-            let firstChoice = { ...state.firstChoice }
-            let secondChoice = { ...state.secondChoice }
-            let error = false
-            let endTime = 0
-            let continueGame = state.continueGame
-
-            if (_.isEmpty(firstChoice)) {
-                firstChoice = card
-            } else if (firstChoice.id !== card.id) {
-                secondChoice = card
-            }
-
-            if (
-                !_.isEmpty(firstChoice) &&
-                !_.isEmpty(secondChoice)
-            ) {
-                if (firstChoice.value === secondChoice.value) {
-                    updatedDeck = updatedDeck.map((c) => {
-                        if (c.value === value) {
-                            return {
-                                ...c,
-                                found: true
-                            }
-                        }
-
-                        return c
-                    })
-
-                    const doesGameContinue = updatedDeck.some((card) => !card.found)
-                    if (!doesGameContinue) {
-                        endTime = new Date().getTime()
-                        continueGame = false
-                    }
-
-                    firstChoice = {}
-                    secondChoice = {}
-                } else {
-                    error = true
-                }
-            }
-
-
-
-            return {
-                ...state,
-                deck: updatedDeck,
-                firstChoice,
-                secondChoice,
-                error,
-                endTime,
-                continueGame
-            }
-
-        case 'HIDE':
-            return {
-                ...state,
-                show: false
-            }
-
-        case 'RESTART':
-            return {
-                ...state,
-                continueGame: true
-            }
+        case 'RESTART': return restart(state)
 
         default:
             return state
