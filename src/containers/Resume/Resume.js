@@ -8,6 +8,7 @@ import Container from '../../components/Container/Container'
 import Title from '../../components/Title/Title'
 import Button from '../../components/Button/Button'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
+import Loading from '../../components/Loading/Loading'
 import classes from './Resume.module.css'
 
 const Resume = (props) => {
@@ -31,6 +32,10 @@ const Resume = (props) => {
             props.restartGame()
         }
     })
+
+    if(scores.length === 0) {
+        return <Container><Loading/></Container>
+    }
 
     return <Container>
         <div className={classes.header}>
