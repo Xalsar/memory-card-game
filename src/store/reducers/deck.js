@@ -68,7 +68,16 @@ const shuffleArray = (array) => {
 }
 
 const setGame = (state) => {
-    const deck = state.deck
+    const deck = [
+        { ...initialState.deck[0] },
+        { ...initialState.deck[1] },
+        { ...initialState.deck[2] },
+        { ...initialState.deck[3] },
+        { ...initialState.deck[4] },
+        { ...initialState.deck[5] },
+        { ...initialState.deck[6] },
+        { ...initialState.deck[7] },
+    ]
 
     shuffleArray(deck)
 
@@ -82,11 +91,32 @@ const setGame = (state) => {
     }
 }
 
-const setTime = (state) => {
+const setTimer = (state) => {
     return {
         ...state,
         startTime: new Date().getTime(),
         endTime: 0
+    }
+}
+
+const setGameAndTimer = (state) => {
+    const deck = [
+        { ...initialState.deck[0] },
+        { ...initialState.deck[1] },
+        { ...initialState.deck[2] },
+        { ...initialState.deck[3] },
+        { ...initialState.deck[4] },
+        { ...initialState.deck[5] },
+        { ...initialState.deck[6] },
+        { ...initialState.deck[7] },
+    ]
+
+    shuffleArray(deck)
+
+    return {
+        ...initialState,
+        deck,
+        startTime: new Date().getTime()
     }
 }
 
@@ -167,6 +197,8 @@ const hide = (state) => {
 }
 
 const restart = (state) => {
+    console.log("WHOLOOO!")
+
     return {
         ...state,
         continueGame: true
@@ -178,7 +210,9 @@ const reducer = (state = initialState, action) => {
 
         case 'SET_GAME': return setGame(state)
 
-        case 'SET_TIMER': return setTime(state)
+        case 'SET_TIMER': return setTimer(state)
+        
+        case 'SET_GAME_AND_TIMER': return setGameAndTimer(state)
 
         case 'PICK': return pick(state, action.payload)
 
