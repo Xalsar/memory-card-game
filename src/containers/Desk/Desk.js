@@ -13,8 +13,7 @@ const Desk = (props) => {
 
     useEffect(() => {
         if (props.continueGame) {
-            props.setGame()
-            props.setTimer()
+            props.setGameAndTimer()
 
             setTimeout(() => {
                 props.hide()
@@ -22,17 +21,19 @@ const Desk = (props) => {
         }
     }, [])
 
-    if (!props.continueGame) {
-        history.push('/resume')
-    }
+    useEffect(() => {
+        if (!props.continueGame) {
+            history.push('/resume')
+        }
 
-    if (props.error) {
-        props.setGame()
+        if (props.error) {
+            props.setGame()
 
-        setTimeout(() => {
-            props.hide()
-        }, 3000)
-    }
+            setTimeout(() => {
+                props.hide()
+            }, 3000)
+        }
+    })
 
     const message = !props.error ? "Come on, you can do it, I belive in you :)" : "Error commited, try again ;)"
 
@@ -80,6 +81,7 @@ const mapDispatchToProps = dispatch => {
     return {
         setGame: () => dispatch({ type: 'SET_GAME' }),
         setTimer: () => dispatch({ type: 'SET_TIMER' }),
+        setGameAndTimer: () => dispatch({ type: 'SET_GAME_AND_TIMER' }),
         pick: (payload) => dispatch({ type: 'PICK', payload }),
         hide: () => dispatch({ type: 'HIDE' })
     }
