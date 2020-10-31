@@ -1,16 +1,29 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useHistory } from "react-router-dom"
 import Card from '../../components/Card/Card'
 import Timer from '../../components/Timer/Timer'
 import Container from '../../components/Container/Container'
 import Title from '../../components/Title/Title'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import classes from './Desk.module.css'
 
 const Desk = (props) => {
+    const deck = useSelector(state => state.deck.deck)
+    const error = useSelector(state => state.deck.error)
+    const firstChoice = useSelector(state => state.deck.firstChoice)
+    const secondChoice = useSelector(state => state.deck.secondChoice)
+    const show = useSelector(state => state.deck.show)
+    const continueGame = useSelector(state => state.deck.continueGame)
+    const userName = useSelector(state => state.user.name)
+
+    const dispatch = useDispatch()
+    const setGame = useCallback(() => dispatch({ type: 'SET_GAME' }), [dispatch])
+    const setGameAndTimer = useCallback(() => dispatch({ type: 'SET_GAME_AND_TIMER' }), [dispatch])
+    const pick = useCallback((payload) => dispatch({ type: 'PICK', payload }), [dispatch])
+    const hide = useCallback(() => dispatch({ type: 'HIDE' }), [dispatch])
+
     const history = useHistory()
-    const { userName, continueGame, setGameAndTimer, error, setGame, hide } = props
 
     useEffect(() => {
         if (!userName) {
@@ -38,7 +51,7 @@ const Desk = (props) => {
         }
     }, [error, continueGame, setGame, hide])
 
-    const message = !props.error ? "Come on, you can do it, I belive in you :)" : "Error commited, try again ;)"
+    const message = !error ? "Come on, you can do it, I belive in you :)" : "Error commited, try again ;)"
 
     return (
         <Container>
@@ -50,17 +63,17 @@ const Desk = (props) => {
                 <Timer />
             </div>
             <div className={classes.cardsContainer}>
-                {props.deck.map((card) => (
+                {deck.map((card) => (
                     <Card
                         key={card.id}
                         hidden={
-                            props.firstChoice.id !== card.id &&
-                            props.secondChoice.id !== card.id &&
-                            !props.show &&
+                            firstChoice.id !== card.id &&
+                            secondChoice.id !== card.id &&
+                            !show &&
                             !card.found
                         }
                         color={card.color}
-                        click={() => props.pick(card.id)}
+                        click={() => pick(card.id)}
                         active={card.found}
                     />
                 ))}
@@ -69,26 +82,4 @@ const Desk = (props) => {
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        deck: state.deck.deck,
-        error: state.deck.error,
-        firstChoice: state.deck.firstChoice,
-        secondChoice: state.deck.secondChoice,
-        show: state.deck.show,
-        continueGame: state.deck.continueGame,
-        userName: state.user.name
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        setGame: () => dispatch({ type: 'SET_GAME' }),
-        setTimer: () => dispatch({ type: 'SET_TIMER' }),
-        setGameAndTimer: () => dispatch({ type: 'SET_GAME_AND_TIMER' }),
-        pick: (payload) => dispatch({ type: 'PICK', payload }),
-        hide: () => dispatch({ type: 'HIDE' })
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Desk)
+export default Desk
