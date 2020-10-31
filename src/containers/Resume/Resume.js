@@ -12,29 +12,30 @@ import Loading from '../../components/Loading/Loading'
 import classes from './Resume.module.css'
 
 const Resume = (props) => {
+    const { userName, restartGame, startTime, endTime } = props
     const interval = new Date(props.endTime - props.startTime)
     const [scores, setScores] = useState([])
     const history = useHistory()
 
     useEffect(() => {
-        if (!props.userName) {
-            history.push('/')
-        }
-    }, [])
+        const interval = new Date(endTime - startTime)
 
-    useEffect(() => {
-        if (scores.length === 0) {
+        if (!userName) {
+            history.push('/')
+        } else {
             axios.post('/score/register-and-list', {
                 score: interval,
-                player: props.userName
+                player: userName
             }).then(data => setScores(data.data))
-        } else {
-            props.restartGame()
         }
-    })
+    }, [userName, startTime, endTime])
 
-    if(scores.length === 0) {
-        return <Container><Loading/></Container>
+    useEffect(() => {
+        restartGame()
+    }, [restartGame])
+
+    if (scores.length === 0) {
+        return <Container><Loading /></Container>
     }
 
     return <Container>

@@ -10,32 +10,33 @@ import classes from './Desk.module.css'
 
 const Desk = (props) => {
     const history = useHistory()
+    const { userName, continueGame, setGameAndTimer, error, setGame, hide } = props
 
     useEffect(() => {
-        if (!props.userName) {
+        if (!userName) {
             history.push('/')
-        } else if (props.continueGame) {
-            props.setGameAndTimer()
+        } else if (continueGame) {
+            setGameAndTimer()
 
             setTimeout(() => {
-                props.hide()
+                hide()
             }, 3000)
         }
-    }, [])
+    }, [userName, continueGame, setGameAndTimer, hide])
 
     useEffect(() => {
-        if (!props.continueGame) {
+        if (!continueGame) {
             history.push('/resume')
         }
 
-        if (props.error) {
-            props.setGame()
+        if (error) {
+            setGame()
 
             setTimeout(() => {
-                props.hide()
+                hide()
             }, 3000)
         }
-    })
+    }, [error, continueGame, setGame, hide])
 
     const message = !props.error ? "Come on, you can do it, I belive in you :)" : "Error commited, try again ;)"
 
