@@ -9,6 +9,8 @@ import Title from '../../components/Title/Title'
 import Button from '../../components/Button/Button'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import Loading from '../../components/Loading/Loading'
+import Confetti from 'react-confetti'
+import useWindowDimensions from '../../hooks/getWindowDimensions'
 import classes from './Resume.module.css'
 
 const Resume = (props) => {
@@ -16,12 +18,14 @@ const Resume = (props) => {
     const startTime = useSelector(state => state.deck.startTime)
     const endTime = useSelector(state => state.deck.endTime)
 
-    const dispatch = useDispatch() 
+    const dispatch = useDispatch()
     const restartGame = useCallback(() => dispatch({ type: 'RESTART' }))
 
     const interval = new Date(endTime - startTime)
     const [scores, setScores] = useState([])
     const history = useHistory()
+
+    const { height, width } = useWindowDimensions();
 
     useEffect(() => {
         const interval = new Date(endTime - startTime)
@@ -45,6 +49,13 @@ const Resume = (props) => {
     }
 
     return <Container>
+        <Confetti
+            width={width}
+            height={'1500rem'}
+            recycle={false}
+            numberOfPieces={500}
+            gravity={0.3}
+        />
         <div className={classes.header}>
             <UserAvatar />
             <Title>
