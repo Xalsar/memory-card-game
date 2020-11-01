@@ -6,7 +6,7 @@
     "client": "cd client && yarn start",
     "server": "yarn env-cmd -f ./config/dev.env node index.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "start": "node server.js",
+    "start": "node index.js",
     "heroku-postbuild": "cd client && yarn install && yarn install --only=dev --no-shrinkwrap && yarn run build"
   },
   "dependencies": {
