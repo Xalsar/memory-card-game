@@ -12,7 +12,6 @@
 .hidden {
     background-color: var(--dull-blue) !important;
     cursor: pointer;
-    transform: scale(1.1);
 }
 
 .hidden h2 {
@@ -28,8 +27,9 @@
 
 .active {
     opacity: .5;
+    transform: scale(.9);
 }
 
 .hidden:hover {
-    transform: scale(1.2) translateY(-2rem);
+    transform: scale(1.1) translateY(-2rem);
 }
