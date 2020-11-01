@@ -6,7 +6,7 @@ const PodiumList = (props) => (
     <ul className={classes.list}>
         {props.items.map((item, id) => (
             <li key={id}>
-                <span className={classes.name}>{item.name}</span>
+                <span className={classes.name}>{item.player.name}</span>
                 <span className={classes.time}>({dateformat(item.score, 'MM:ss')})</span>
             </li>
         ))}
