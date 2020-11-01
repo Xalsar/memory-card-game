@@ -23,7 +23,10 @@ const Resume = (props) => {
     const restartGame = useCallback(() => dispatch({ type: 'RESTART' }))
 
     const interval = new Date(endTime - startTime)
-    const [scores, setScores] = useState([])
+    const [scores, setScores] = useState({
+        top: [],
+        player: []
+    })
     const history = useHistory()
 
     const { height, width } = useWindowDimensions();
@@ -45,7 +48,7 @@ const Resume = (props) => {
         restartGame()
     }, [restartGame])
 
-    if (scores.length === 0) {
+    if (scores.top === 0) {
         return <Container><Loading /></Container>
     }
 
@@ -66,9 +69,11 @@ const Resume = (props) => {
         <h3 className={classes.time}>
             {dateformat(interval, 'MM:ss')}
         </h3>
-        <PlayerChart/>
+        <PlayerChart
+            scores={scores.player}
+        />
         <PodiumList
-            items={scores}
+            items={scores.top}
         />
         <Button
             click={() => {
