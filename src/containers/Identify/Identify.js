@@ -14,7 +14,7 @@ const Identify = (props) => {
 
     const errorMessage = error ? <span className={classes.error}>You need a name in order to play!</span> : undefined
 
-    if(error && props.name) {
+    if (error && props.name) {
         setError(false)
     }
 
@@ -29,22 +29,25 @@ const Identify = (props) => {
                 What is your player name?
             </Title>
         </div>
-        <TextInput
-            change={props.changeName}
-            value={props.name}
-        ></TextInput>
-        {errorMessage}
-        <Button
-            click={() => {
-                if (!props.name) {
-                    setError(true)
-                } else {
-                    history.push('/game')
-                }
-            }}
-        >
-            PLAY
-        </Button>
+        <form>
+            <TextInput
+                change={props.changeName}
+                value={props.name}
+            ></TextInput>
+            {errorMessage}
+            <Button
+                click={() => {
+                    if (!props.name) {
+                        setError(true)
+                    } else {
+                        history.push('/game')
+                    }
+                }}
+                type="submit"
+            >
+                PLAY
+            </Button>
+        </form>
     </Container>
 }
 
