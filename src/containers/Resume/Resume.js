@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect, useState, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom"
 import dateformat from 'dateformat'
 import axios from '../../axios'
@@ -12,8 +12,14 @@ import Loading from '../../components/Loading/Loading'
 import classes from './Resume.module.css'
 
 const Resume = (props) => {
-    const { userName, restartGame, startTime, endTime } = props
-    const interval = new Date(props.endTime - props.startTime)
+    const userName = useSelector(state => state.user.name)
+    const startTime = useSelector(state => state.deck.startTime)
+    const endTime = useSelector(state => state.deck.endTime)
+
+    const dispatch = useDispatch() 
+    const restartGame = useCallback(() => dispatch({ type: 'RESTART' }))
+
+    const interval = new Date(endTime - startTime)
     const [scores, setScores] = useState([])
     const history = useHistory()
 
@@ -61,19 +67,4 @@ const Resume = (props) => {
     </Container>
 }
 
-const mapStateToProps = state => {
-    return {
-        startTime: state.deck.startTime,
-        endTime: state.deck.endTime,
-        continueGame: state.deck.continueGame,
-        userName: state.user.name,
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        restartGame: () => dispatch({ type: 'RESTART' })
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Resume)
+export default Resume
