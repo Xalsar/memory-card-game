@@ -2,42 +2,43 @@ import React from 'react'
 import { Line } from 'react-chartjs-2'
 import classes from './PlayerChart.module.css'
 
-const data = {
-  labels: ['1', '2', '3', '4', '5', '6'],
-  datasets: [
-    {
-      label: '# your scores',
-      data: [12, 19, 3, 5, 2, 3],
-      fill: false,
-      backgroundColor: '#C4E538',
-      borderColor: '#A3CB38',
-    },
-    {
-        label: '# top player scores scores',
-        data: [5, 10, 15],
-        fill: false,
-        backgroundColor: '#12CBC4',
-        borderColor: '#1289A7',
-      },
-  ],
-}
+const LineChart = (props) => {
+  const playerScores = props.scores.map((scoreObject) => {
+    const seconds = new Date(scoreObject.score)
 
-const options = {
-  scales: {
-    yAxes: [
+    return seconds / 1000
+  })
+
+  const labels = playerScores.map((score, id) => id + 1)
+
+  const data = {
+    labels,
+    datasets: [
       {
-        ticks: {
-          beginAtZero: true,
-        },
-      },
-    ],
-  },
-}
+        label: '# your scores',
+        data: playerScores,
+        fill: false,
+        backgroundColor: '#C4E538',
+        borderColor: '#A3CB38',
+      }
+    ]
+  }
 
-const LineChart = () => (
-  <div className={classes.chart}>
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  }
+
+  return < div className={classes.chart} >
     <Line data={data} options={options} />
-  </div>
-)
+  </div >
+}
 
 export default LineChart
