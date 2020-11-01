@@ -4,6 +4,7 @@ import Card from '../../components/Card/Card'
 import Timer from '../../components/Timer/Timer'
 import Container from '../../components/Container/Container'
 import Title from '../../components/Title/Title'
+import CountDownTimer from '../../components/CountDownTimer/CountDownTimer'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import { useDispatch, useSelector } from 'react-redux'
 import classes from './Desk.module.css'
@@ -34,14 +35,12 @@ const Desk = (props) => {
             setTimeout(() => {
                 hide()
             }, 3000)
+        } else {
+            history.push('/resume')
         }
     }, [userName, continueGame, setGameAndTimer, hide])
 
     useEffect(() => {
-        if (!continueGame) {
-            history.push('/resume')
-        }
-
         if (error) {
             setGame()
 
@@ -49,16 +48,16 @@ const Desk = (props) => {
                 hide()
             }, 3000)
         }
-    }, [error, continueGame, setGame, hide])
-
-    const message = !error ? "Come on, you can do it, I belive in you :)" : "Error commited, try again ;)"
+    }, [error, setGame, hide])
 
     return (
         <Container>
             <div className={classes.header}>
                 <UserAvatar />
                 <div className={classes.infoPanel}>
-                    <Title>{message}</Title>
+                    <Title>
+                        Come on, you can do it, I belive in you :)
+                    </Title>
                 </div>
                 <Timer />
             </div>
