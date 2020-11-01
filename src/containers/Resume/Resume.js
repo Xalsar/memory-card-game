@@ -2,15 +2,16 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from "react-router-dom"
 import dateformat from 'dateformat'
+import Confetti from 'react-confetti'
 import axios from '../../axios'
+import useWindowDimensions from '../../hooks/getWindowDimensions'
 import PodiumList from '../../components/PodiumList/PodiumList'
 import Container from '../../components/Container/Container'
 import Title from '../../components/Title/Title'
 import Button from '../../components/Button/Button'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
+import PlayerChart from '../../components/PlayerChart/PlayerChart'
 import Loading from '../../components/Loading/Loading'
-import Confetti from 'react-confetti'
-import useWindowDimensions from '../../hooks/getWindowDimensions'
 import classes from './Resume.module.css'
 
 const Resume = (props) => {
@@ -65,6 +66,7 @@ const Resume = (props) => {
         <h3 className={classes.time}>
             {dateformat(interval, 'MM:ss')}
         </h3>
+        <PlayerChart/>
         <PodiumList
             items={scores}
         />
