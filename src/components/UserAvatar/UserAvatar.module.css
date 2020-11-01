@@ -9,8 +9,20 @@
     width: 8rem;
 }
 
-.avatar h3 {
+.text {
+    padding: 2rem 2.5rem;
+}
+
+.text h3 {
     font-family: var(--main-font);
     font-size: 2rem;
-    padding: 2rem;
+    text-align: left;
+}
+
+.text a {
+    display: block;
+    text-align: left;
+    margin-top: .2rem;
+    font-family: var(--main-font);
+    font-size: 1.2rem;
 }
