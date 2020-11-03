@@ -22,7 +22,7 @@ const Resume = (props) => {
 
     // Import reducer actions
     const dispatch = useDispatch()
-    const restartGame = useCallback(() => dispatch({ type: 'RESTART' }), dispatch)
+    const restartGame = useCallback(() => dispatch({ type: 'RESTART' }), [dispatch])
 
     const interval = new Date(endTime - startTime)
     const [scores, setScores] = useState({
