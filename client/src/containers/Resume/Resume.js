@@ -20,7 +20,7 @@ const Resume = (props) => {
     const endTime = useSelector(state => state.deck.endTime)
 
     const dispatch = useDispatch()
-    const restartGame = useCallback(() => dispatch({ type: 'RESTART' }))
+    const restartGame = useCallback(() => dispatch({ type: 'RESTART' }), dispatch)
 
     const interval = new Date(endTime - startTime)
     const [scores, setScores] = useState({
@@ -29,7 +29,7 @@ const Resume = (props) => {
     })
     const history = useHistory()
 
-    const { height, width } = useWindowDimensions();
+    const { width } = useWindowDimensions();
 
     useEffect(() => {
         const interval = new Date(endTime - startTime)
