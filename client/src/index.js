@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import deck from './store/reducers/deck'
 import user from './store/reducers/user'
@@ -14,7 +15,7 @@ import user from './store/reducers/user'
 const store = createStore(combineReducers({
   deck,
   user
-}))
+}), composeWithDevTools())
 
 ReactDOM.render(
   <React.StrictMode>
