@@ -27,7 +27,7 @@ router.post('/score/register-and-list', async (req, res) => {
         await score.save()
 
         const playerScores = await Score.find({ "player._id": player._id }, '_id player score')
-        const topScores = await Score.find({}, '_id player score').sort({ score: "asc" })
+        const topScores = await Score.find({}, '_id player score').sort({ score: "asc" }).limit(10)
 
         // Return player score and top scores
         res.status(200).send({
