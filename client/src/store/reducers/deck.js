@@ -67,6 +67,27 @@ const shuffleArray = (array) => {
     }
 }
 
+const setGame = (state) => {
+    const deck = [
+        { ...initialState.deck[0] },
+        { ...initialState.deck[1] },
+        { ...initialState.deck[2] },
+        { ...initialState.deck[3] },
+        { ...initialState.deck[4] },
+        { ...initialState.deck[5] },
+        { ...initialState.deck[6] },
+        { ...initialState.deck[7] },
+    ]
+
+    shuffleArray(deck)
+
+    return {
+        ...initialState,
+        startTime: state.startTime,
+        deck
+    }
+}
+
 const setGameAndTimer = (state) => {
     const deck = [
         { ...initialState.deck[0] },
@@ -193,6 +214,8 @@ const restart = (state) => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+
+        case 'SET_GAME': return setGame(state)
 
         case 'SET_GAME_AND_TIMER': return setGameAndTimer(state)
 
