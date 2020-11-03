@@ -1,5 +1,14 @@
 const mongoose = require('mongoose')
 
+/*
+
+Create score schema and model:
+Note that I include the player name in the score.
+
+Why? Because making a LEFT MARGIN is very resource expensive in Mongo. So I priorize efficiency over memory.
+
+*/
+
 const scoreSchema = new mongoose.Schema({
     score: {
         type: Date,

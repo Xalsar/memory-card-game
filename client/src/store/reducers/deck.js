@@ -67,38 +67,6 @@ const shuffleArray = (array) => {
     }
 }
 
-const setGame = (state) => {
-    const deck = [
-        { ...initialState.deck[0] },
-        { ...initialState.deck[1] },
-        { ...initialState.deck[2] },
-        { ...initialState.deck[3] },
-        { ...initialState.deck[4] },
-        { ...initialState.deck[5] },
-        { ...initialState.deck[6] },
-        { ...initialState.deck[7] },
-    ]
-
-    shuffleArray(deck)
-
-    return {
-        ...state,
-        error: false,
-        show: true,
-        deck,
-        firstChoice: {},
-        secondChoice: {}
-    }
-}
-
-const setTimer = (state) => {
-    return {
-        ...state,
-        startTime: new Date().getTime(),
-        endTime: 0
-    }
-}
-
 const setGameAndTimer = (state) => {
     const deck = [
         { ...initialState.deck[0] },
@@ -132,6 +100,20 @@ const pick = (state, id) => {
         { ...state.deck[7] },
     ]
 
+    /*
+    
+    How system works?
+
+    When user picks a card:
+    1- Has the user picked the first card? If no select it
+    2- Has the user picked the second card? If no select it
+    3- Have both cards been selected?
+    4- If they form a pair, set them as found and continue game
+    5- If all pairs have been found, set finish time and finish game
+    5- If they do not form a pair, set error and reset (see also Desk container)
+
+    */
+
     const card = updatedDeck.find((c) => c.id === id)
     const value = card.value
 
@@ -142,16 +124,20 @@ const pick = (state, id) => {
     let continueGame = state.continueGame
 
     if (_.isEmpty(firstChoice)) {
+        // 1
         firstChoice = card
     } else if (firstChoice.id !== card.id) {
+        // 2
         secondChoice = card
     }
 
+    // 3
     if (
         !_.isEmpty(firstChoice) &&
         !_.isEmpty(secondChoice)
     ) {
         if (firstChoice.value === secondChoice.value) {
+            // 4
             updatedDeck = updatedDeck.map((c) => {
                 if (c.value === value) {
                     return {
@@ -163,6 +149,7 @@ const pick = (state, id) => {
                 return c
             })
 
+            // 5
             const doesGameContinue = updatedDeck.some((card) => !card.found)
             if (!doesGameContinue) {
                 endTime = new Date().getTime()
@@ -172,6 +159,7 @@ const pick = (state, id) => {
             firstChoice = {}
             secondChoice = {}
         } else {
+            // 6
             error = true
         }
     }
@@ -197,8 +185,6 @@ const hide = (state) => {
 }
 
 const restart = (state) => {
-    console.log("WHOLOOO!")
-
     return {
         ...state,
         continueGame: true
@@ -208,10 +194,6 @@ const restart = (state) => {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case 'SET_GAME': return setGame(state)
-
-        case 'SET_TIMER': return setTimer(state)
-        
         case 'SET_GAME_AND_TIMER': return setGameAndTimer(state)
 
         case 'PICK': return pick(state, action.payload)

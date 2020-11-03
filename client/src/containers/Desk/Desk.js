@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import classes from './Desk.module.css'
 
 const Desk = (props) => {
+    // Import reducer varaibles
     const deck = useSelector(state => state.deck.deck)
     const error = useSelector(state => state.deck.error)
     const firstChoice = useSelector(state => state.deck.firstChoice)
@@ -17,6 +18,7 @@ const Desk = (props) => {
     const continueGame = useSelector(state => state.deck.continueGame)
     const userName = useSelector(state => state.user.name)
 
+    // Import reducer actions
     const dispatch = useDispatch()
     const setGame = useCallback(() => dispatch({ type: 'SET_GAME' }), [dispatch])
     const setGameAndTimer = useCallback(() => dispatch({ type: 'SET_GAME_AND_TIMER' }), [dispatch])
@@ -26,21 +28,26 @@ const Desk = (props) => {
     const history = useHistory()
 
     useEffect(() => {
+        // If no user redirect to root so user can identify
         if (!userName) {
             history.push('/')
         } else if (continueGame) {
+            // Set game and timer in first load
             setGameAndTimer()
 
+            // Whait 3 seconds and hide cards
             setTimeout(() => {
                 hide()
             }, 3000)
         } else {
+            // If game is over (because all cards have been found) redirect to /resume
             history.push('/resume')
         }
     }, [userName, continueGame, setGameAndTimer, hide])
 
     useEffect(() => {
         if (error) {
+            // If error set game and hide cards
             setGame()
 
             setTimeout(() => {
@@ -60,6 +67,12 @@ const Desk = (props) => {
                 </div>
                 <Timer />
             </div>
+            {/*
+            Dispplay all cards and show them id:
+            + Is one of the cards selected
+            + Has been found
+            + show has been specified (because game has been set, so user can see all the cards before they hide)
+            */}
             <div className={classes.cardsContainer}>
                 {deck.map((card) => (
                     <Card

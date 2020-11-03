@@ -12,6 +12,12 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import deck from './store/reducers/deck'
 import user from './store/reducers/user'
 
+/*
+
+Create store and add functionallity to work with redux devtools
+
+*/
+
 const store = createStore(combineReducers({
   deck,
   user

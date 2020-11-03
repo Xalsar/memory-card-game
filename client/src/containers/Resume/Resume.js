@@ -15,10 +15,12 @@ import Loading from '../../components/Loading/Loading'
 import classes from './Resume.module.css'
 
 const Resume = (props) => {
+    // Import reducer varaibles
     const userName = useSelector(state => state.user.name)
     const startTime = useSelector(state => state.deck.startTime)
     const endTime = useSelector(state => state.deck.endTime)
 
+    // Import reducer actions
     const dispatch = useDispatch()
     const restartGame = useCallback(() => dispatch({ type: 'RESTART' }), dispatch)
 
@@ -29,14 +31,17 @@ const Resume = (props) => {
     })
     const history = useHistory()
 
+    // Get width of the page for the confetti animation
     const { width } = useWindowDimensions();
 
     useEffect(() => {
         const interval = new Date(endTime - startTime)
 
+        // If no user, redirect to / so it van be indentified
         if (!userName) {
             history.push('/')
         } else {
+            // Save score and return top scores
             axios.post('/score/register-and-list', {
                 score: interval,
                 player: userName
@@ -44,10 +49,12 @@ const Resume = (props) => {
         }
     }, [userName, startTime, endTime])
 
+    // On first load restart game (so when user goes to /game, it can play again)
     useEffect(() => {
         restartGame()
     }, [restartGame])
 
+    // If no scores, display loading spin
     if (scores.top === 0) {
         return <Container><Loading /></Container>
     }

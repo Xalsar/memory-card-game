@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;700&display=swap');
 
 :root {
+    /*
+    
+    Color and font variables
+
+    */
     --main-font: 'M PLUS Rounded 1c', sans-serif;
-    --text-font: 'Lato';
 
     --light-blue: #12CBC4;
     --dull-blue: #1B1464;

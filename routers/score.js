@@ -5,6 +5,8 @@ const router = new express.Router()
 
 router.post('/score/register-and-list', async (req, res) => {
     try {
+
+        // If no user, create one
         let player = await User.findOne({ name: req.body.player }, '_id name')
         if (!player) {
             player = new User({
@@ -14,6 +16,7 @@ router.post('/score/register-and-list', async (req, res) => {
             await player.save()
         }
 
+        // Save score
         const score = new Score({
             score: req.body.score,
             player: {
@@ -26,6 +29,7 @@ router.post('/score/register-and-list', async (req, res) => {
         const playerScores = await Score.find({ "player._id": player._id }, '_id player score')
         const topScores = await Score.find({}, '_id player score').sort({ score: "asc" })
 
+        // Return player score and top scores
         res.status(200).send({
             top: topScores,
             player: playerScores

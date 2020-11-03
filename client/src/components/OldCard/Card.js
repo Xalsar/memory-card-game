@@ -2,6 +2,14 @@ import React from 'react'
 import classes from './Card.module.css'
 
 const Card = (props) => {
+    /*
+    
+    This was the old design, with a super cool flip animation.
+
+    But due to a bug I can not find, the animation fails in some cards randomly. So I retired it.
+
+    */
+
     const activeClasses = [classes.card]
 
     if (props.hidden) {
